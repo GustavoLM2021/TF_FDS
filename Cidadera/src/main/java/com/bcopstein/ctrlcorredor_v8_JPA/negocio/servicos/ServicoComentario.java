@@ -46,7 +46,7 @@ public class ServicoComentario {
         int idusu=comentario.getIdautorcoment();
         List<Usuario> usu=usuarioRep.findByIdusu(idusu);
         if (usu.isEmpty()){
-            return "Erro usuario inexistente";
+            return "Erro usuario nao cadastrado";
         }
        
         int idrparent=comentario.getIdrparent();

@@ -2,7 +2,6 @@ package com.bcopstein.ctrlcorredor_v8_JPA.negocio.servicos;
 
 import java.util.List;
 
-import com.bcopstein.ctrlcorredor_v8_JPA.adaptadores.repositorios.ReclamacaoRepository;
 import com.bcopstein.ctrlcorredor_v8_JPA.negocio.entidades.Reclamacao;
 import com.bcopstein.ctrlcorredor_v8_JPA.negocio.entidades.Usuario;
 import com.bcopstein.ctrlcorredor_v8_JPA.negocio.repositorios.IReclamacaoRepository;
@@ -26,8 +25,15 @@ public class ServicoReclamacao {
         return reclamacaoRep.todos();
     }
 
-    public void cadastraReclamacao(Reclamacao reclamacao){
+    public String cadastraReclamacao(Reclamacao reclamacao){
+        int u=reclamacao.getidautor();
+        List<Usuario> usu=usuarioRep.findByIdusu(u);
+        if (usu.isEmpty()){
+            return "Erro usuario nao cadastrado";
+        }
+       
         reclamacaoRep.cadastra(reclamacao);
+        return "Reclamacao incluida com sucesso";
     }
     public String readStatus(int idr){
         List<Reclamacao> resp=reclamacaoRep.findByIdr(idr);
@@ -46,7 +52,7 @@ public class ServicoReclamacao {
     public String stsSolved(int idr, int idusu) {
         List<Usuario> usu=usuarioRep.findByIdusu(idusu);
         if (usu.isEmpty()){
-            return "Erro usuario inexistente";
+            return "Erro usuario nao cadastrado";
         }
         Usuario u=usu.get(0);
         if(u.getOficial()||u.getAdmin()){

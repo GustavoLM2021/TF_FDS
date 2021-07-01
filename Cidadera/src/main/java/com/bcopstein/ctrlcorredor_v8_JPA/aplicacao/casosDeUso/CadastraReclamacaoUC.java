@@ -17,8 +17,9 @@ public class CadastraReclamacaoUC {
         this.servicoReclamacao = servicoReclamacao;
     }
     
-    public void run(Reclamacao reclamacao){
-        servicoReclamacao.cadastraReclamacao(reclamacao);
+    public String run(Reclamacao reclamacao){
+        String res=servicoReclamacao.cadastraReclamacao(reclamacao);
+        return res;
     }
     public String statusFinder(int idr){
         return servicoReclamacao.readStatus(idr);
